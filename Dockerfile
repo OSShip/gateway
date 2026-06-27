@@ -1,6 +1,6 @@
 FROM golang:1.22-alpine AS builder
 WORKDIR /app
-COPY utils/ /app/packages/
+COPY utils/ /app/utils/
 COPY services/gateway/ /app/services/gateway/
 WORKDIR /app/services/gateway
 RUN go mod download && CGO_ENABLED=0 go build -o /gateway .
