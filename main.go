@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -16,6 +17,8 @@ import (
 
 func main() {
 	cfg := config.Load()
+	observability.InitSentry("gateway")
+	defer observability.FlushSentry(2 * time.Second)
 
 	opt, err := redis.ParseURL(cfg.RedisURL)
 	if err != nil {
@@ -37,6 +40,9 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Recoverer)
+	r.Use(observability.SentryHTTPMiddleware)
+	r.Use(observability.SentryRecoverMiddleware("gateway"))
+	r.Use(observability.SentryErrorMiddleware("gateway"))
 	r.Use(observability.PrometheusMiddleware("gateway"))
 
 	r.Get("/health", observability.HealthHandler("gateway"))
