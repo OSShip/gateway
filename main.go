@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -19,12 +19,15 @@ func main() {
 	cfg := config.Load()
 	observability.InitSentry("gateway")
 	defer observability.FlushSentry(2 * time.Second)
+	logger := observability.InitLogger("gateway")
 
 	opt, err := redis.ParseURL(cfg.RedisURL)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error("redis parse failed", "err", err)
+		os.Exit(1)
 	}
 	rdb := redis.NewClient(opt)
+	logger.Info("redis connected", "url", cfg.RedisURL)
 	limiter := redis_rate.NewLimiter(rdb)
 	routeLimits := ratelimit.ApplyOverrides(observability.DefaultRouteLimits())
 
@@ -43,6 +46,7 @@ func main() {
 	r.Use(observability.SentryHTTPMiddleware)
 	r.Use(observability.SentryRecoverMiddleware("gateway"))
 	r.Use(observability.SentryErrorMiddleware("gateway"))
+	r.Use(observability.RequestLogMiddleware("gateway"))
 	r.Use(observability.PrometheusMiddleware("gateway"))
 
 	r.Get("/health", observability.HealthHandler("gateway"))
@@ -53,6 +57,9 @@ func main() {
 		api.HandleFunc("/*", proxyHandler.ServeHTTP)
 	})
 
-	log.Printf("gateway listening on :%s", cfg.Port)
-	log.Fatal(http.ListenAndServe(":"+cfg.Port, r))
+	logger.Info("gateway listening", "port", cfg.Port, "backends", len(cfg.Backends))
+	if err := http.ListenAndServe(":"+cfg.Port, r); err != nil {
+		logger.Error("server failed", "err", err)
+		os.Exit(1)
+	}
 }
