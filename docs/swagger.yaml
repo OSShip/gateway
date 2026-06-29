@@ -1,0 +1,1239 @@
+basePath: /api/v1
+definitions:
+  apidoc.ActivateEnrollmentReq:
+    properties:
+      checkout_session_id:
+        type: string
+    type: object
+  apidoc.CheckoutReq:
+    properties:
+      amount_cents:
+        example: 9900
+        type: integer
+      cancel_url:
+        example: http://localhost/checkout/cancel
+        type: string
+      enrollment_id:
+        type: string
+      listing_id:
+        type: string
+      mentor_id:
+        type: string
+      student_id:
+        type: string
+      success_url:
+        example: http://localhost/checkout/success
+        type: string
+    type: object
+  apidoc.CheckoutResp:
+    properties:
+      checkout_url:
+        type: string
+      session_id:
+        type: string
+    type: object
+  apidoc.ConnectOnboardReq:
+    properties:
+      refresh_url:
+        example: http://localhost/dashboard/mentor
+        type: string
+      return_url:
+        example: http://localhost/dashboard/mentor
+        type: string
+    type: object
+  apidoc.ConnectOnboardResp:
+    properties:
+      account_id:
+        type: string
+      onboarding_url:
+        type: string
+    type: object
+  apidoc.ConnectStatus:
+    properties:
+      account_id:
+        type: string
+      connected:
+        type: boolean
+    type: object
+  apidoc.Contribution:
+    properties:
+      github_verified:
+        type: boolean
+      id:
+        type: string
+      pr_url:
+        type: string
+    type: object
+  apidoc.ContributionReq:
+    properties:
+      pr_url:
+        example: https://github.com/org/repo/pull/42
+        type: string
+    type: object
+  apidoc.CreateEnrollmentReq:
+    properties:
+      listing_id:
+        type: string
+    type: object
+  apidoc.CreateListingReq:
+    properties:
+      description:
+        type: string
+      duration_weeks:
+        example: 8
+        type: integer
+      oss_project_name:
+        example: kubernetes
+        type: string
+      oss_repo_url:
+        example: https://github.com/kubernetes/kubernetes
+        type: string
+      price_cents:
+        example: 9900
+        type: integer
+      total_slots:
+        example: 5
+        type: integer
+    type: object
+  apidoc.CreateSessionReq:
+    properties:
+      listing_id:
+        type: string
+      scheduled_at:
+        example: "2026-06-28T15:00:00Z"
+        type: string
+    type: object
+  apidoc.Enrollment:
+    properties:
+      id:
+        type: string
+      listing_id:
+        type: string
+      status:
+        example: pending
+        type: string
+    type: object
+  apidoc.ErrorResp:
+    properties:
+      error:
+        example: invalid credentials
+        type: string
+    type: object
+  apidoc.HealthResp:
+    properties:
+      service:
+        example: gateway
+        type: string
+      status:
+        example: ok
+        type: string
+    type: object
+  apidoc.JoinSessionResp:
+    properties:
+      jitsi_url:
+        type: string
+      room:
+        type: string
+    type: object
+  apidoc.LedgerEntry:
+    properties:
+      created_at:
+        type: string
+      event_type:
+        type: string
+      gross_cents:
+        type: integer
+      id:
+        type: string
+      mentor_payout_cents:
+        type: integer
+      platform_fee_cents:
+        type: integer
+    type: object
+  apidoc.Listing:
+    properties:
+      description:
+        type: string
+      duration_weeks:
+        example: 8
+        type: integer
+      filled_slots:
+        example: 2
+        type: integer
+      id:
+        type: string
+      mentor_display_name:
+        type: string
+      mentor_github_username:
+        type: string
+      mentor_id:
+        type: string
+      oss_project_name:
+        example: kubernetes
+        type: string
+      oss_repo_url:
+        example: https://github.com/kubernetes/kubernetes
+        type: string
+      price_cents:
+        example: 9900
+        type: integer
+      status:
+        example: active
+        type: string
+      total_slots:
+        example: 5
+        type: integer
+    type: object
+  apidoc.LoginReq:
+    properties:
+      email:
+        example: user@example.com
+        type: string
+      password:
+        example: secret123
+        type: string
+    type: object
+  apidoc.MentorApplication:
+    properties:
+      created_at:
+        type: string
+      github_data:
+        additionalProperties: true
+        type: object
+      id:
+        type: string
+      status:
+        example: pending
+        type: string
+      user_id:
+        type: string
+    type: object
+  apidoc.MentorApplyReq:
+    properties:
+      github_username:
+        example: octocat
+        type: string
+    type: object
+  apidoc.PayoutSummary:
+    properties:
+      total_gross_cents:
+        type: integer
+      total_mentor_payout_cents:
+        type: integer
+      total_platform_fee_cents:
+        type: integer
+      transaction_count:
+        type: integer
+    type: object
+  apidoc.Profile:
+    properties:
+      bio:
+        type: string
+      display_name:
+        type: string
+      email:
+        type: string
+      github_username:
+        type: string
+      id:
+        type: string
+      role:
+        type: string
+    type: object
+  apidoc.ProgressEntry:
+    properties:
+      created_at:
+        type: string
+      enrollment_id:
+        type: string
+      id:
+        type: string
+      note:
+        type: string
+      pr_url:
+        type: string
+    type: object
+  apidoc.ProgressReq:
+    properties:
+      enrollment_id:
+        type: string
+      note:
+        type: string
+      pr_url:
+        type: string
+    type: object
+  apidoc.RefreshResp:
+    properties:
+      token:
+        type: string
+    type: object
+  apidoc.RegisterReq:
+    properties:
+      display_name:
+        example: Jane Doe
+        type: string
+      email:
+        example: user@example.com
+        type: string
+      github_username:
+        example: octocat
+        type: string
+      password:
+        example: secret123
+        type: string
+      role:
+        enum:
+        - student
+        - mentor
+        - admin
+        example: student
+        type: string
+    type: object
+  apidoc.ReviewApplicationReq:
+    properties:
+      status:
+        enum:
+        - approved
+        - rejected
+        type: string
+    type: object
+  apidoc.Session:
+    properties:
+      id:
+        type: string
+      jitsi_room_name:
+        type: string
+      jitsi_url:
+        type: string
+      listing_id:
+        type: string
+      scheduled_at:
+        example: "2026-06-28T15:00:00Z"
+        type: string
+      status:
+        example: scheduled
+        type: string
+    type: object
+  apidoc.StatusResp:
+    properties:
+      status:
+        example: active
+        type: string
+    type: object
+  apidoc.TokenResp:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/apidoc.User'
+    type: object
+  apidoc.UpdateListingReq:
+    properties:
+      description:
+        type: string
+      duration_weeks:
+        type: integer
+      price_cents:
+        type: integer
+      status:
+        example: active
+        type: string
+    type: object
+  apidoc.UpdateProfileReq:
+    properties:
+      bio:
+        type: string
+      display_name:
+        type: string
+      github_username:
+        type: string
+    type: object
+  apidoc.UpdateSessionReq:
+    properties:
+      scheduled_at:
+        type: string
+      status:
+        type: string
+    type: object
+  apidoc.User:
+    properties:
+      display_name:
+        example: Jane Doe
+        type: string
+      email:
+        example: user@example.com
+        type: string
+      github_username:
+        example: octocat
+        type: string
+      id:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+      role:
+        enum:
+        - student
+        - mentor
+        - admin
+        example: student
+        type: string
+    type: object
+host: localhost
+info:
+  contact: {}
+  description: OSShip open-source mentorship platform API exposed via the gateway.
+  title: OSShip API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates with email and password.
+      parameters:
+      - description: Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.TokenResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      summary: Login
+      tags:
+      - auth
+  /auth/me:
+    get:
+      description: Returns the authenticated user profile.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Current user
+      tags:
+      - auth
+  /auth/oauth/github:
+    get:
+      description: Redirects to GitHub authorization.
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirect to GitHub
+          schema:
+            type: string
+      summary: Start GitHub OAuth
+      tags:
+      - auth
+  /auth/oauth/github/callback:
+    get:
+      description: Handles GitHub OAuth redirect and issues a JWT.
+      parameters:
+      - description: Authorization code
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: CSRF state
+        in: query
+        name: state
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirect with token
+          schema:
+            type: string
+      summary: GitHub OAuth callback
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      description: Issues a new token from a valid existing JWT.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.RefreshResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Refresh JWT
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Creates an account and returns a JWT.
+      parameters:
+      - description: Registration payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.TokenResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      summary: Register a new user
+      tags:
+      - auth
+  /health:
+    get:
+      description: Returns gateway service status.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.HealthResp'
+      summary: Gateway health check
+      tags:
+      - system
+  /listings:
+    get:
+      description: Returns mentorship listings filtered by status and optional OSS
+        project.
+      parameters:
+      - default: active
+        description: Listing status
+        in: query
+        name: status
+        type: string
+      - description: Filter by OSS project name
+        in: query
+        name: oss_project
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.Listing'
+            type: array
+      summary: List listings
+      tags:
+      - listings
+    post:
+      consumes:
+      - application/json
+      description: Creates a mentorship listing (approved mentor only).
+      parameters:
+      - description: Listing payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.CreateListingReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.Listing'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Create listing
+      tags:
+      - listings
+  /listings/{id}:
+    get:
+      description: Returns a single listing by ID.
+      parameters:
+      - description: Listing ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.Listing'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      summary: Get listing
+      tags:
+      - listings
+    patch:
+      consumes:
+      - application/json
+      description: Updates a listing owned by the authenticated mentor.
+      parameters:
+      - description: Listing ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Fields to update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.UpdateListingReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.Listing'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Update listing
+      tags:
+      - listings
+  /mentors/admin/applications:
+    get:
+      description: Returns mentor applications (admin only).
+      parameters:
+      - default: pending
+        description: Filter by status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.MentorApplication'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: List mentor applications
+      tags:
+      - mentors
+  /mentors/admin/applications/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Approves or rejects a mentor application (admin only).
+      parameters:
+      - description: Application ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Review decision
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.ReviewApplicationReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.StatusResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Review mentor application
+      tags:
+      - mentors
+  /mentors/apply:
+    post:
+      consumes:
+      - application/json
+      description: Submits a mentor application with GitHub contribution data.
+      parameters:
+      - description: Optional GitHub username override
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/apidoc.MentorApplyReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.MentorApplication'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Apply to become a mentor
+      tags:
+      - mentors
+  /payments/checkout:
+    post:
+      consumes:
+      - application/json
+      description: Starts checkout for a listing enrollment. Uses Stripe Connect when
+        the mentor is onboarded.
+      parameters:
+      - description: Checkout payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.CheckoutReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.CheckoutResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Create Stripe Checkout session
+      tags:
+      - payments
+  /payments/connect/onboard:
+    post:
+      consumes:
+      - application/json
+      description: Creates or resumes Stripe Express onboarding for a mentor.
+      parameters:
+      - description: Return and refresh URLs
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.ConnectOnboardReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.ConnectOnboardResp'
+      security:
+      - BearerAuth: []
+      summary: Start Stripe Connect onboarding
+      tags:
+      - payments
+  /payments/connect/status:
+    get:
+      description: Returns whether the mentor has completed Stripe Connect onboarding.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.ConnectStatus'
+      security:
+      - BearerAuth: []
+      summary: Stripe Connect status
+      tags:
+      - payments
+  /payments/ledger/{listingId}:
+    get:
+      description: Returns payment ledger entries for a listing (mentor or admin).
+      parameters:
+      - description: Listing ID
+        in: path
+        name: listingId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.LedgerEntry'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Listing ledger
+      tags:
+      - payments
+  /public/listings:
+    get:
+      description: Public alias for active listings (cached).
+      parameters:
+      - default: active
+        description: Listing status
+        in: query
+        name: status
+        type: string
+      - description: Filter by OSS project name
+        in: query
+        name: oss_project
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.Listing'
+            type: array
+      summary: List public listings
+      tags:
+      - listings
+  /public/payout-summary:
+    get:
+      description: Returns anonymized platform payout aggregates.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.PayoutSummary'
+      summary: Public payout summary
+      tags:
+      - payments
+  /sessions:
+    post:
+      consumes:
+      - application/json
+      description: Creates a mentorship session with a Jitsi room (mentor only).
+      parameters:
+      - description: Session schedule
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.CreateSessionReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.Session'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Schedule a session
+      tags:
+      - sessions
+  /sessions/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Updates scheduled time or status.
+      parameters:
+      - description: Session ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Fields to update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.UpdateSessionReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.StatusResp'
+      security:
+      - BearerAuth: []
+      summary: Update session
+      tags:
+      - sessions
+  /sessions/{id}/join:
+    post:
+      description: Returns the Jitsi URL for an authorized participant.
+      parameters:
+      - description: Session ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.JoinSessionResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Join session
+      tags:
+      - sessions
+  /sessions/listings/{listingId}:
+    get:
+      description: Returns scheduled sessions for a mentorship listing.
+      parameters:
+      - description: Listing ID
+        in: path
+        name: listingId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.Session'
+            type: array
+      summary: List sessions for a listing
+      tags:
+      - sessions
+  /sessions/progress:
+    get:
+      description: Returns progress notes for an enrollment.
+      parameters:
+      - description: Enrollment ID
+        in: query
+        name: enrollment_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.ProgressEntry'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: List progress entries
+      tags:
+      - sessions
+    post:
+      consumes:
+      - application/json
+      description: Records a progress entry for an enrollment.
+      parameters:
+      - description: Progress entry
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.ProgressReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Add progress note
+      tags:
+      - sessions
+  /users/{id}/enrollments:
+    get:
+      description: Returns enrollments for a user.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/apidoc.Enrollment'
+            type: array
+      summary: List user enrollments
+      tags:
+      - users
+  /users/{id}/profile:
+    get:
+      description: Returns a user profile. Email is included when requesting your
+        own profile.
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.Profile'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      summary: Get user profile
+      tags:
+      - users
+  /users/enrollments:
+    post:
+      consumes:
+      - application/json
+      description: Creates a pending enrollment for checkout.
+      parameters:
+      - description: Listing to enroll in
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.CreateEnrollmentReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.Enrollment'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Enroll in a listing
+      tags:
+      - users
+  /users/enrollments/{id}/activate:
+    post:
+      consumes:
+      - application/json
+      description: Marks an enrollment active after successful payment.
+      parameters:
+      - description: Enrollment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Optional checkout session ID
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/apidoc.ActivateEnrollmentReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.StatusResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      summary: Activate enrollment
+      tags:
+      - users
+  /users/me:
+    patch:
+      consumes:
+      - application/json
+      description: Updates display name, bio, or GitHub username.
+      parameters:
+      - description: Profile fields
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.UpdateProfileReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apidoc.Profile'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Update own profile
+      tags:
+      - users
+  /users/me/contributions:
+    post:
+      consumes:
+      - application/json
+      description: Records a pull request URL and verifies merge status when possible.
+      parameters:
+      - description: PR URL
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/apidoc.ContributionReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/apidoc.Contribution'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/apidoc.ErrorResp'
+      security:
+      - BearerAuth: []
+      summary: Link a GitHub PR contribution
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    description: 'JWT token. Example: Bearer {token}'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

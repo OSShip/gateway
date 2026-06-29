@@ -26,7 +26,7 @@ type Handler struct {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	path := r.URL.Path
+	path := NormalizeAPIPath(r.URL.Path)
 	log := observability.DefaultLog
 
 	if auth.RequiresAuth(path, r.Method) {
@@ -118,7 +118,8 @@ func (h *Handler) forward(w http.ResponseWriter, r *http.Request, targetURL, str
 	originalDirector := proxy.Director
 	proxy.Director = func(req *http.Request) {
 		originalDirector(req)
-		stripped := strings.TrimPrefix(req.URL.Path, stripPrefix)
+		fullPath := NormalizeAPIPath(req.URL.Path)
+		stripped := strings.TrimPrefix(fullPath, stripPrefix)
 		req.URL.Path = RewritePath(stripped, stripPrefix)
 		if req.URL.Path == "" {
 			req.URL.Path = "/"
