@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine AS builder
+FROM golang:1.26-alpine AS builder
 WORKDIR /app
 RUN go install github.com/swaggo/swag/cmd/swag@v1.16.6
 COPY utils/ /app/utils/
